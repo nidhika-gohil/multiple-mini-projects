@@ -19,11 +19,11 @@ const appRoute = createBrowserRouter([
       {
         path:"/carousel",
         element: <Carousel/>
-      },
-      {
-        path: "/agesalarycalculator",
-        element: <Carousel/>
       }
+      // {
+      //   path: "/agesalarycalculator",
+      //   element: <AgeSalaryCalculator/>
+      // }
     ]
   }
 ]);
