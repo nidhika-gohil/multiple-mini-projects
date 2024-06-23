@@ -12,9 +12,8 @@ const Carousel = () => {
   };
 
   const handleNextClick = () => {
-    console.log("currentIndex ================== > ",currentIndex); 
     setCurrentIndex((prev) => {
-      console.log("prevvvvvvvvvvvvvv => ",prev," photosData.length => ",photosData);
+      // console.log("prevvvvvvvvvvvvvv => ",prev," photosData.length => ",photosData);
       return prev === photosData.length - 1 ? 0 : prev + 1;
     });
   };
