@@ -25,7 +25,7 @@ const Carousel = () => {
     
     // fetchCarouselData();
     return () => {
-      clearTimeout(timer);
+      clearInterval(timer);
     }
   },[currentIndex]);
 
