@@ -1,0 +1,25 @@
+.navbar-container { 
+  background-color: rgb(6, 67, 70);
+  padding: 10px;
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+
+ul {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul li {
+  list-style: none;
+  padding: 5px 10px;
+}
+
+ul li a {
+  color: white;
+  text-decoration: none;
+}
