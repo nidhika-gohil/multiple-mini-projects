@@ -32,9 +32,9 @@ const rootElement = document.getElementById("root");
 const root = ReactDOM.createRoot(rootElement);
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={appRoute}/>
-  </React.StrictMode>
+  // </React.StrictMode>
 );
 
 // ReactDOM.createRoot(document.getElementById('root')).render(

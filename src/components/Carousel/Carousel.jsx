@@ -1,46 +1,51 @@
 import "./Carousel.css"
 import { useEffect, useState } from "react";
-import { GET_PHOTOS } from "./util/constants";
+import usePhoto from "./util/usePhoto";
 
 const Carousel = () => {
-  const [photosData, setPhotosData] = useState([]);
   const [currentIndex, setCurrentIndex] = useState(0);
-
-  const fetchCarouselData = async() => {
-    let data = await fetch(GET_PHOTOS+"?client_id="+import.meta.env.VITE_UNSPLASH_ACCESS_KEY);
-    let list = await data.json();
-    setPhotosData(list);
-  };
-
+  const photosData = usePhoto();
   const handlePrevClick = () => {
-    currentIndex === 0 ? setCurrentIndex(photosData.length - 1) : setCurrentIndex((prev) => prev - 1);
+    setCurrentIndex((prev) => {
+      return prev === 0 ? photosData.length - 1 : prev - 1;
+    });
   };
 
   const handleNextClick = () => {
-    currentIndex === photosData.length - 1 ? setCurrentIndex(0) : setCurrentIndex((prev) => prev + 1);
+    console.log("currentIndex ================== > ",currentIndex); 
+    setCurrentIndex((prev) => {
+      console.log("prevvvvvvvvvvvvvv => ",prev," photosData.length => ",photosData);
+      return prev === photosData.length - 1 ? 0 : prev + 1;
+    });
   };
+
   useEffect(()=> {
-    fetchCarouselData();
-  },[]);
+    const timer = setInterval(() => {
+      handleNextClick();
+    }, 5000)
+    
+    // fetchCarouselData();
+    return () => {
+      clearTimeout(timer);
+    }
+  },[currentIndex]);
 
   return (
-    photosData.length === 0 || photosData === undefined ? (<div>No Data found</div>) : 
+    photosData === undefined || photosData.length === 0  ? (<div>No Data found</div>) : 
     (
       <div className="main-carousel-container">
         <button onClick={handlePrevClick}> Prev </button>
-        <div>
-          <img src={photosData[currentIndex].urls.regular} alt= {photosData[currentIndex].alt_description} width={300} height={400} />
-        </div>
-        <button onClick={handleNextClick}> Next </button>
-        {/* {
+        {
           photosData.map((photo, index) => {
             return (
-              <div key={photo.id}>
-                <img src={photo.urls.regular} width={100} height={200}/>
+              <div className={currentIndex === index ? "block" : "d-none"} key={photo.id}>
+                {/* {console.log("Indexxxxxxxxxxxxxxx => ",currentIndex)} */}
+                <img src={photo.urls.regular} alt= {photo.alt_description} width={300} height={400} />
               </div>
             )
           })
-        } */}
+        }
+        <button onClick={handleNextClick}> Next </button>
       </div>
     )
   )
