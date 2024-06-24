@@ -18,6 +18,10 @@ const Carousel = () => {
     });
   };
 
+  const handleBulletClick = (index) => {
+    setCurrentIndex(index);
+  };
+
   useEffect(()=> {
     const timer = setInterval(() => {
       handleNextClick();
@@ -32,20 +36,30 @@ const Carousel = () => {
   return (
     photosData === undefined || photosData.length === 0  ? (<div>No Data found</div>) : 
     (
-      <div className="main-carousel-container">
-        <button onClick={handlePrevClick}> Prev </button>
-        {
-          photosData.map((photo, index) => {
-            return (
-              <div className={currentIndex === index ? "block" : "d-none"} key={photo.id}>
-                {/* {console.log("Indexxxxxxxxxxxxxxx => ",currentIndex)} */}
-                <img src={photo.urls.regular} alt= {photo.alt_description} width={300} height={400} />
-              </div>
-            )
-          })
-        }
-        <button onClick={handleNextClick}> Next </button>
-      </div>
+      <>
+        <div className="main-carousel-container">
+          <button onClick={handlePrevClick}> Prev </button>
+          {
+            photosData.map((photo, index) => {
+              return (
+                <div className={currentIndex === index ? "block" : "d-none"} key={photo.id}>
+                  {/* {console.log("Indexxxxxxxxxxxxxxx => ",currentIndex)} */}
+                  <img src={photo.urls.regular} alt= {photo.alt_description} width={300} height={400} />
+                </div>
+              )
+            })
+          }
+          <button onClick={handleNextClick}> Next </button>
+        </div>
+        <div className="bullet-container">
+          {
+            photosData.map((photo, index) => {
+              return (<div className={"bullet " + (currentIndex === index ? "active" : "")} onClick={() => handleBulletClick(index)}>
+              </div>)
+            })
+          }
+        </div>
+      </>
     )
   )
 };
