@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { GET_NAVBAR_DATA } from "../Carousel/util/constants";
+import { GET_NAVBAR_DATA } from "../../util/constants";
 import "./Navbar.css"
 
 const Navbar = () => {

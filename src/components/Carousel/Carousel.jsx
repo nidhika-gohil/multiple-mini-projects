@@ -1,6 +1,6 @@
 import "./Carousel.css"
 import { useEffect, useState } from "react";
-import usePhoto from "./util/usePhoto";
+import usePhoto from "../../util/usePhoto";
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
