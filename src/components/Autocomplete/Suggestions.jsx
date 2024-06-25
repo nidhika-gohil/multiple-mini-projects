@@ -4,7 +4,9 @@ const Suggestions = ({
   suggestions,
   loading,
   loadingText,
-  onSuggestionClick=()=>{}
+  onSuggestionClick=()=>{},
+  activeSuggestionIndex,
+  suggestionRefs
   //error
 }) => {
 
@@ -29,11 +31,11 @@ const Suggestions = ({
     suggestions.length > 0 ? (
       <>
         {
-          suggestions.map((suggestion) => {
+          suggestions.map((suggestion, index) => {
             return (
-              <div className="suggestions" onClick={() => {
+              <div className={`suggestions ${activeSuggestionIndex === index ? "active" : ""}`} onClick={() => {
                 handleSuggestionClick(suggestion[datakey])
-              }} key={suggestion.id}>{getHighlightedText(suggestion[datakey])}</div>
+              }} key={suggestion.id} ref={(el) => (suggestionRefs.current[index] = el)}>{getHighlightedText(suggestion[datakey])}</div>
             )
           })
         }
