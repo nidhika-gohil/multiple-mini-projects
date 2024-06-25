@@ -1,31 +1,30 @@
+import { GET_RECIPES } from "../../util/constants";
 import Autocomplete from "./Autocomplete";
 import "./search.css"
-const Search = () => {
 
-  const fetchSuggestions = async(userInput) => {
-    const response = await fetch("https://dummyjson.com/recipes/search?q="+userInput);
-    if(!response.ok) { 
-      throw new Error("Something went wrong");
+const Search = () => {
+  const fetchSuggestions = async(input) => {
+    const response = await fetch(GET_RECIPES+"?q="+input);
+    if (!response.ok) {
+      throw new Error("Error fetching data from dummy api");
     }
     const recipesList = await response.json();
-    console.log("recipesList => ",recipesList.recipes);
     return recipesList.recipes;
   };
-  return (<div className="main-autocomplete-container">
-    <h1>Autocomplete/Typeahead</h1>
-    <Autocomplete 
-      placeholder={"Enter your text"}
-      dataKey = {"name"}
-      // staticData = {[]}
-      fetchSuggestions={fetchSuggestions}
-      onChange= {(input) => {}}
-      onSelect= {(e) => {}}
-      onBlur= {(e) => {}}
-      onFocus= {(e) => {}}
-      customStyle={{}}
-      customLoading= {"Loading..."}
-    />
-  </div>)
+  return(
+    <div className="main-autocomplete-container">
+      <h1>Autocomplete/Typeahed</h1>
+      <Autocomplete
+        placeholder={"Enter your text"}
+        datakey={"name"}
+        onChange={(input) => {}}
+        onSelect={() => {}}
+        onBlur={() => {}}
+        onKeyup={() => {}}
+        fetchSuggestions={fetchSuggestions}
+      />
+    </div>
+  )
 };
 
 export default Search;

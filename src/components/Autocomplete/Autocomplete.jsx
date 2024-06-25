@@ -1,64 +1,81 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Suggestions from "./Suggestions";
 
 const Autocomplete = ({
-  placeholder="Enter your text",
-  dataKey = "name",
-  staticData = [],
-  fetchSuggestions,
-  onChange= () => {},
-  onSelect=  () => {},
-  onBlur=  () => {},
-  onFocus=  () => {},
-  customStyle,
-  customLoading
+  placeholder="Text",
+  datakey="name",
+  staticData=[],
+  onChange=(input) => {},
+  onSelect=() => {},
+  onBlur=() => {},
+  onKeyup=()=>{},
+  fetchSuggestions
 }) => {
   const [inputValue, setInputValue] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(true);
-  const [suggestionList, setSuggestionList] = useState([]);
-  const handleOnInputChange = (e) => {
-    setInputValue(e.target.value);
-    onChange(e.target.value);
+  const [suggestions, setSuggestions] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [suggestionClicked, setSuggestionClicked] = useState(false);
+  const handlOnChange = (e) =>{
+    let targetValue = e.target.value;
+    setInputValue(targetValue);
+    onChange(targetValue);
   };
 
-  const getSuggestions = async() => {
+  const getSuggestions = async() =>{
+    let result = [];
     setLoading(true);
-    setError(false);
-    let list;
-    try { 
-      if (staticData.length > 0) {
-      } else if(fetchSuggestions) {
-        list = await fetchSuggestions(inputValue);
+    if(staticData && staticData.length > 0) {
+      // return data from staticData which matched
+    } else if(fetchSuggestions) {
+      try {
+        result = await fetchSuggestions(inputValue);
+        setSuggestions(result);
+      } catch(err) {
+        setSuggestions(result);
+        // setError("Error");
+        console.log("Error fetching the suggestions");
+      } finally {
+        setLoading(false);
       }
-      console.log("list => ",list);
-      setSuggestionList(list);
-    } catch(err) {
-      setError("Failed to fetch the data");
-    } finally {
-      setLoading(false);
     }
+  };
+
+  const onSuggestionClick = (suggestion) =>{
+    setInputValue(suggestion);
+    setSuggestions([]);
+    setSuggestionClicked(true);
+    setLoading(false);
   };
 
   useEffect(() => {
-    if(inputValue.length > 1) {
+    if(inputValue.length > 1 && !suggestionClicked) {
       getSuggestions();
+    } else {
+      setSuggestions([]);
     }
   },[inputValue]);
+
   return (
     <div className="container">
-      <input 
-        type="text"
-        value={inputValue}
+      <input value={inputValue}
         placeholder={placeholder}
-        onChange={handleOnInputChange}
+        onChange={handlOnChange}
+        onSelect={onSelect}
         onBlur={onBlur}
-        onFocus={onFocus}
-        style={customStyle}
       />
-      <Suggestions suggestions={suggestionList}/>
+      <div className="suggestions-list">
+        <Suggestions
+          inputValue={inputValue}
+          datakey={datakey}
+          suggestions={suggestions}
+          onSuggestionClick={onSuggestionClick}
+          loading={loading}
+          loadingText={"Loading..."}
+          // error={error}
+        />
+      </div>
     </div>
-  )  
+  );
 };
 
 export default Autocomplete;

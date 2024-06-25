@@ -21,7 +21,25 @@
   font-size: 16px;
 }
 
-.suggestion-list { 
+.suggestions-list { 
   position: absolute;
   width: 100%;
+  background-color: white;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  overflow-y: auto;
+  max-height: 150px;
+}
+
+.suggestions {
+  padding: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.loading-text {
+  font-style: italic;
+}
+
+.highlighted-text b{
+  color: rgb(4, 105, 105);
 }
