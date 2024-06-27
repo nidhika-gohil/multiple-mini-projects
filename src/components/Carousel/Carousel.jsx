@@ -1,6 +1,6 @@
 import "./Carousel.css"
 import { useEffect, useState } from "react";
-import usePhoto from "../../util/usePhoto";
+import usePhoto from "./customHook/usePhoto";
 
 const Carousel = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -13,7 +13,7 @@ const Carousel = () => {
 
   const handleNextClick = () => {
     setCurrentIndex((prev) => {
-      // console.log("prevvvvvvvvvvvvvv => ",prev," photosData.length => ",photosData);
+      console.log("prevvvvvvvvvvvvvv => ",prev);
       return prev === photosData.length - 1 ? 0 : prev + 1;
     });
   };
@@ -25,13 +25,13 @@ const Carousel = () => {
   useEffect(()=> {
     const timer = setInterval(() => {
       handleNextClick();
-    }, 5000)
+    }, 5000);
     
     // fetchCarouselData();
     return () => {
       clearInterval(timer);
     }
-  },[currentIndex]);
+  },[photosData, currentIndex]);
 
   return (
     photosData === undefined || photosData.length === 0  ? (<div>No Data found</div>) : 

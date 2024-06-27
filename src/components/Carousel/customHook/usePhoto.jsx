@@ -1,5 +1,5 @@
 import { useEffect,useState } from "react";
-import { GET_PHOTOS } from "./constants";
+import { GET_PHOTOS } from "../../../util/constants";
 
 
 const usePhoto = () => {

@@ -6,6 +6,7 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom'
 import MainBody from './components/MainBody/MainBody'
 import Carousel from './components/Carousel/Carousel'
 import Search from './components/Autocomplete/Search'
+import TicTacToe from './components/TicTacToe/TicTacToe.jsx'
 
 
 const appRoute = createBrowserRouter([
@@ -24,6 +25,10 @@ const appRoute = createBrowserRouter([
       {
         path: "/autocomplete",
         element: <Search/>
+      },
+      {
+        path: "/ticTacToe",
+        element: <TicTacToe boardDimension={3}/>
       }
     ]
   }
