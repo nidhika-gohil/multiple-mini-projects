@@ -4,17 +4,45 @@ const initialBoard = () => Array(9).fill(null);
 const useTicTacToe = () => {
   const [board, setBoard] = useState(initialBoard());
   const [isXTurn, setIsXTurn] = useState(true);
-  
-  const WINNER_PATTERN = [
-    [0, 1, 2],
-    [3, 4, 5],
-    [6, 7, 8],
-    [0, 3, 6],
-    [1, 4, 7],
-    [2, 5, 8],
-    [0, 4, 8],
-    [2, 4, 6]
-  ];
+  const WINNER_PATTERN = generateWinningPatterns(3);
+  const generateWinningPatterns = (size = 3) =>{
+    const patterns = [];
+    for(let row=0; row < size;row++){
+      const pattern = [];
+      for(let col=0; col < size; col++){
+        pattern.push(row * size + col);
+      }
+      patterns.push(pattern);
+    }
+
+    for(let row = 0; row < size;row++){
+      const pattern = [];
+      for(let col=0; col < size; col++){
+        pattern.push(col * size + row);
+      }
+      patterns.push(pattern);
+    }
+
+    const diagonalLeft = [];
+    for(let i = 0; i < size ; i++){
+      diagonalLeft.push(i * size + i);
+    }
+
+    const diagonalRight = [];
+    for(let i = 0; i < size ; i++){
+      diagonalRight.push(i * size + (size - 1 - i));
+    }
+  };
+  // const WINNER_PATTERN = [
+  //   [0, 1, 2],
+  //   [3, 4, 5],
+  //   [6, 7, 8],
+  //   [0, 3, 6],
+  //   [1, 4, 7],
+  //   [2, 5, 8],
+  //   [0, 4, 8],
+  //   [2, 4, 6]
+  // ];
   
   const calculateWinner = () =>{
     for(let i=0; i< WINNER_PATTERN.length; i++){
