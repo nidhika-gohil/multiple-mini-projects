@@ -4,7 +4,6 @@ const initialBoard = () => Array(9).fill(null);
 const useTicTacToe = () => {
   const [board, setBoard] = useState(initialBoard());
   const [isXTurn, setIsXTurn] = useState(true);
-  const WINNER_PATTERN = generateWinningPatterns(3);
   const generateWinningPatterns = (size = 3) =>{
     const patterns = [];
     for(let row=0; row < size;row++){
@@ -27,12 +26,18 @@ const useTicTacToe = () => {
     for(let i = 0; i < size ; i++){
       diagonalLeft.push(i * size + i);
     }
+    patterns.push(diagonalLeft);
 
     const diagonalRight = [];
     for(let i = 0; i < size ; i++){
       diagonalRight.push(i * size + (size - 1 - i));
     }
+    patterns.push(diagonalRight);
+    return patterns;
   };
+
+  const WINNER_PATTERN = generateWinningPatterns(3);
+  
   // const WINNER_PATTERN = [
   //   [0, 1, 2],
   //   [3, 4, 5],
